@@ -1,0 +1,65 @@
+#include "NameThread.h"
+#include <QPointF>
+#include <QDebug>
+//void NameThread::SubTopicProcess(const MotionPlanner::LocalizationData::ConstPtr& msg)
+//{
+//    if(!m_bSubTopicUpdated)
+//    {
+//	m_bSubTopicUpdated = true;
+//    }
+//    
+//}
+
+NameThread::NameThread(int argc, char** argv)
+    :m_bThreadStop(false),init_argc(argc), init_argv(argv)
+{
+    ros::init(init_argc, init_argv, "NameThread");
+    ros::NodeHandle n;
+
+    //possub = n.subscribe("LocalizationData", 10, &NameThread::SubTopicProcess, this);
+    
+    //msgpub = n.advertise<nav_msgs::Path>("EbandPathData", 100);
+}
+NameThread::~NameThread()
+{
+   
+}
+void NameThread::stop()
+{
+    qDebug()<<"Thread::stop called from main thread:"<<currentThreadId();
+    QMutexLocker locker(&m_mutex);
+    m_bThreadStop = true;
+}
+
+void NameThread::PubMsg()
+{
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+    nav_msgs::Path msg;
+
+    //msg.header.frame_id = "/eband_path";
+    //msg.poses.resize(manager->nodes()->size());
+
+    //for(int i=0; i<manager->nodes()->size(); i++)
+    //{
+    //   msg.poses[i].pose.position.x = manager->nodes()->at(i)->pos().rx()- m_centerPos[0];
+    //    msg.poses[i].pose.position.y = manager->nodes()->at(i)->pos().ry()- m_centerPos[1];
+    //    msg.poses[i].pose.position.z = 0.0;
+    //}
+    //msgpub.publish(msg);
+}
+
+void NameThread::run()
+{
+    ros::Rate loop_rate(10);
+    while(1)
+    {
+        {
+            QMutexLocker locker(&m_mutex);
+            if(m_bThreadStop) break;
+           
+        }
+        ros::spinOnce();
+        loop_rate.sleep();
+        
+    }
+}

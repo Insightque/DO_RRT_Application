@@ -1,0 +1,143 @@
+#include <QtGui>
+#include <QApplication>
+#include "NameThread.h"
+#include <stdio.h>
+#include <iostream>
+#include "../inc/PKG_NAME_main.h"
+
+using namespace std;
+
+
+
+CmdCommandThread::CmdCommandThread(QString cmd, QObject * parent)
+    : QThread(parent)
+    , cmd(cmd)
+{
+    threadStop = false;
+}
+
+void CmdCommandThread::stop()
+{
+    threadStop = true;
+    char cmd[1024];
+
+    sprintf(cmd, "kill -SIGINT %lld", pid);
+
+    printf("%s\n", cmd);
+
+    QProcess kill;
+    kill.start(cmd);
+    kill.waitForFinished(-1);
+
+    printf("record end\n");
+}
+
+
+void CmdCommandThread::run()
+{
+//	qDebug("cmd Thread Start");
+
+    QProcess process;
+    process.start(cmd);
+    pid = process.pid();
+    process.waitForFinished(-1);
+
+
+//	QString p_stdout = process.readAllStandardOutput();
+//	QString p_stderr = process.readAllStandardError();
+
+
+//	qDebug("cmd Thread End");
+
+}
+///////////////////////////////////////////////////////////////////////////////////
+
+
+MainWindow::MainWindow(int argc, char** argv, QWidget *parent)
+    : QMainWindow(parent)
+{
+    ui.setupUi(this);
+    recordStop = false;
+}
+
+
+
+MainWindow::~MainWindow() {}
+
+
+
+
+void MainWindow::on_plotBtn_clicked()
+{
+    QString cmd = "rosrun rqt_plot rqt_plot --args ";
+    QString args = ui.mTopicValue->text();
+
+    cmd.append(args);
+    printf("%s\n", cmd.toStdString().c_str());
+    plotThread = new CmdCommandThread(cmd);
+    plotThread->start();
+}
+
+
+
+void MainWindow::on_recordBtn_clicked()
+{
+    if(!recordStop)
+    {
+        ui.recordBtn->setText("Rec Stop");
+        QString str = ui.mFileName->text();
+        str = str.replace(QString(" "), QString(""));
+        //printf("%s\n", str.toStdString().c_str());
+
+
+        if(str.isEmpty() && !ui.mTopicName->text().isEmpty())
+        {
+            QString cmd = "rosbag record ";
+            QString args = ui.mTopicName->text();
+
+            cmd.append(args);
+
+            printf("%s\n", cmd.toStdString().c_str());
+
+            bagThread = new CmdCommandThread(cmd);
+            bagThread->start();
+        }
+        else if(!ui.mTopicName->text().isEmpty())
+        {
+            QString cmd = "rosbag record -O ";
+            cmd.append(str+" ");
+
+            QString args = ui.mTopicName->text();
+            cmd.append(args);
+
+            printf("%s\n", cmd.toStdString().c_str());
+
+            bagThread = new CmdCommandThread(cmd);
+            bagThread->start();
+        }
+        else
+        {
+            printf("null\n");
+        }
+        recordStop = true;
+    }
+    else
+    {
+        ui.recordBtn->setText("Record");
+        bagThread->stop();
+        bagThread->wait();
+        recordStop = false;
+    }
+}
+
+
+
+int main(int argc, char** argv)
+{
+    QApplication app(argc, argv);
+    MainWindow w(argc, argv);
+    w.show();
+    app.connect(&app, SIGNAL(lastWindowClosed()), &app, SLOT(quit()));
+
+    return app.exec();
+}

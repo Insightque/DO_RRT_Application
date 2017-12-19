@@ -1,0 +1,370 @@
+#include "../inc/ParkingPlannerThread.h"
+#include <QPointF>
+#include <QDebug>
+#include <visualization_msgs/Marker.h>  	//Marker messages to visualize objects in Rviz
+#include <AngleUtils.h>
+#include <pcl/point_cloud.h>
+#include "../inc/Parameters.h"
+bool ParkingPlannerThread::ServiceProcess(motion_planner::srvParkingCmd::Request &req,motion_planner::srvParkingCmd::Response &res)
+{
+    //m_tar_x = req.x;
+    //m_tar_y = req.y;
+    //m_tar_theta = 0.;
+
+    m_bParkingPathUpdate = true;
+    
+
+    //res.result = 1; // 1 is valid response
+    return true;
+}//added by shinsh - 151006
+
+// Vehicle Potential Map from HeightMap Module
+void ParkingPlannerThread::SubTopicProcess()
+{
+    if(!m_bSubTopicUpdated)
+    {
+        m_pcPotential->clear();
+
+        m_pos[0] = msg->data.at(0); // x
+        m_pos[1] = msg->data.at(1); // y
+        m_pos[2] = msg->data.at(2); // theta
+
+        for(int i=0; i<int((msg->data.size()-3)/4.0); i++)
+        {
+            pcl::PointXYZINormal pt;
+            pt.x = msg->data.at(i*4+3); // vector1_x
+            pt.y = msg->data.at(i*4+4); // vector1_y
+            pt.z = 0.0;
+
+            float theta = msg->data.at(i*4+5); // theta ( global coordinate )
+            pt.normal[0] = cos(theta);
+            pt.normal[1] = sin(theta);
+            pt.normal[2] = msg->data.at(i*4+6); // vector size
+
+            pt.intensity = msg->data.at(i*4+5);
+
+            m_pcPotential->push_back(pt);
+            // cout << m_pos[0]<<" "<<m_pos[1]<<" "<<m_pos[2]<<" " <<pt.x << " " <<pt.y << " " <<pt.normal[0] << " " <<pt.normal[1] << " " <<pt.normal[2] << endl;
+            // cout << msg->data.at(i*4+3) <<" " << msg->data.at(i*4+4) <<" " << msg->data.at(i*4+5) <<" " << msg->data.at(i*4+6) << endl;
+        }
+
+        m_kdPotential.setInputCloud(m_pcPotential);
+
+        m_bSubTopicUpdated = true;
+
+    }
+}
+
+bool ParkingPlannerThread::KdTreeSearchPointTheta(pcl::PointXYZINormal searchPoint, float radius, float& theta)
+{
+    std::vector<int> pointIdxRadiusSearch;
+    std::vector<float> pointRadiusSquaredDistance;
+    
+    float fTheta=0;
+   
+    if( m_kdPotential.radiusSearch(searchPoint, radius, pointIdxRadiusSearch, pointRadiusSquaredDistance ) )
+    {
+        float fNormal[3]={0,};
+	float fNormalSize = 0;
+        for (size_t i = 0; i < pointIdxRadiusSearch.size(); ++i)
+	{
+		fTheta += m_pcPotential->points[ pointIdxRadiusSearch[i] ].intensity;
+	}
+    }
+
+    if( pointIdxRadiusSearch.size() == 0 )
+    {
+	//cout << "no nearest point" << endl;
+	return false;
+    }
+    theta = fTheta/(float)pointIdxRadiusSearch.size();
+    return true;
+
+}
+
+void ParkingPlannerThread::SetGlobalPath(vector<Vector2d> nodeVec)
+{
+    PubMsg();
+
+    Vector2d vec1 = nodeVec[nodeVec.size()-1];
+    Vector2d vec2 = nodeVec[nodeVec.size()-2];
+
+    cout << "SETGLOBAL" << DEGREES(AngleUtils::angle(vec2 - vec1)) << endl;
+
+    // vec1 - vec2
+    /////////////////////////////////////////////////////////////////
+    motion_planner::srvHeightMap srv;
+    srv.request.x = vec1(0);
+    srv.request.y = vec1(1);
+    srv.request.theta = AngleUtils::angle(vec2 - vec1);
+    srv.request.mode = 2.0;
+
+    m_goal[0] = vec1(0);
+    m_goal[1] = vec1(1);
+    m_goal[2] = AngleUtils::angle(vec2 - vec1);
+
+    if( service_client.call(srv) )
+    {
+        std::cout << srv.request.x << " " << srv.request.y <<" " <<srv.request.theta<< " receive from heightmap srv !\n";
+    }
+    ////////////////////////////////////////////////////////////////
+
+}
+
+void ParkingPlannerThread::publish_parking_path(vector<Vector2d> path)
+{
+    nav_msgs::Path msg;
+    std::vector<geometry_msgs::PoseStamped> waypoints;
+    msg.header.frame_id = "/camera_init";
+    msg.header.stamp = ros::Time::now();
+
+
+    //////////////////////////////////////////
+    // POSE STAMPED
+    for(int i=0; i<path.size(); i++)
+    {
+        geometry_msgs::PoseStamped waypt;
+        waypt.header.frame_id = "/camera_init";
+        waypt.header.stamp = ros::Time::now();
+
+
+        waypt.pose.position.x = path[i][0];
+        waypt.pose.position.y = path[i][1];
+        waypt.pose.position.z = 0;
+        waypoints.push_back(waypt);
+
+    }
+
+    msg.poses.resize(waypoints.size());
+
+    // Extract the plan in world coordinates, we assume the path is all in the same frame
+    for(unsigned int i=0; i < waypoints.size(); i++)
+    {
+        msg.poses[i] = waypoints[i];
+    }
+    msgpub.publish(msg);
+
+}
+
+
+ParkingPlannerThread::ParkingPlannerThread(int argc, char** argv)
+    :m_bThreadStop(false),init_argc(argc), init_argv(argv)
+    ,m_randomSample(-SEARCH_RANGE_X,SEARCH_RANGE_X,-SEARCH_RANGE_Y,SEARCH_RANGE_Y)
+{
+    
+    ros::init(init_argc, init_argv, "ParkingPlannerThread");
+    ros::NodeHandle n;
+
+    m_bSubTopicUpdated = false;
+    m_bParkingPathUpdate = false;
+    m_pos[0] = 0.0;
+    m_pos[1] = 0.0;
+    m_pos[2] = 0.0;
+   
+    m_goal[0] = 0.0;
+    m_goal[1] = 0.0;
+    m_goal[2] = 0.0;
+
+    m_vel = 0.0;
+    m_pcPotential  = pcl::PointCloud<pcl::PointXYZINormal>::Ptr(new pcl::PointCloud<pcl::PointXYZINormal>);
+
+    possub = n.subscribe("velodyne_potential_array", 1, &ParkingPlannerThread::SubTopicProcess, this);
+    msgpub = n.advertise<nav_msgs::Path>("ParkingPathData", 1);
+
+    // motion planner should call this service
+    service_server = n.advertiseService("parking_cmd_srv", &ParkingPlannerThread::ServiceProcess, this);
+
+    // service for potential map
+    service_client = n.serviceClient<motion_planner::srvHeightMap>("height_map_srv");
+}
+
+ParkingPlannerThread::~ParkingPlannerThread()
+{
+
+}
+void ParkingPlannerThread::stop()
+{
+    qDebug()<<"Thread::stop called from main thread:"<<currentThreadId();
+    QMutexLocker locker(&m_mutex);
+    m_bThreadStop = true;
+}
+
+void ParkingPlannerThread::PubMsg()
+{
+    publish_parking_path(m_LocalParkingPath);
+}
+
+void ParkingPlannerThread::Compute()
+{
+
+
+    // Initialize RRT Tree by Current Edge
+    m_rrtTree.ClearTree();
+
+    // x, y, h, id, parent id, forward(1)/backward(-1)/stop(0), cost 
+    std::vector<Edge* > pvEdge;
+
+    Edge* pEdge = new Edge();
+    pEdge->x = m_pos[0];
+    pEdge->y = m_pos[1];
+    pEdge->h = m_pos[2];
+    pEdge->v = 0.0;
+    pEdge->a = 0.0;
+    pEdge->wa = 0.0;
+
+    pvEdge.push_back(pEdge);
+
+    Node* pNode = new Node(m_pos[0],m_pos[1], m_pos[2], 0, -1 , 1, 1000000000.0,pvEdge);
+    m_rrtTree.AddNode(pNode);
+
+    bool state = false; //
+    // 1. Get Current Potential Field
+    // 2. MultiGoal generator
+
+    int maxIter = 1000;
+    int iter =0 ;
+    while(!state)
+    {
+	iter ++;
+        // 3. Get random sample
+        pcl::PointXYZI randomSample;
+	if( m_randomSample.GetRandomBool() )
+	{
+		randomSample.x = m_goal[0];
+		randomSample.y = m_goal[1];
+		randomSample.z = m_goal[2];
+	}
+	else
+	{
+        	m_randomSample.GetRandomSample(randomSample.x, randomSample.y, randomSample.z);
+	}
+        AngleUtils::TransLocalToGlobal(m_pos[0], m_pos[1], m_pos[2], randomSample.x, randomSample.y);
+        //randomSample.z  = AngleUtils::toRange(randomSample.z + m_pos[2]);
+	
+	/////////////////////////////////////////////////////////////////////////////////////////////
+        // Generation of desired heading angle
+	float radius = 1.0;
+
+        pcl::PointXYZINormal searchPoint;
+        searchPoint.x = randomSample.x;
+        searchPoint.y = randomSample.y;
+        searchPoint.z = 0.0;
+        searchPoint.normal[0] = 0.0;
+        searchPoint.normal[1] = 0.0;
+        searchPoint.normal[2] = 0.0;
+
+	float randTheta = 0.0;
+
+	if( !KdTreeSearchPointTheta(searchPoint, radius, randTheta ) )
+		continue;
+	
+        randomSample.z = AngleUtils::toRange(randTheta);
+	/////////////////////////////////////////////////////////////////////////////////////////////
+        // m_rrtTree
+        // 4. Search nearest tree
+	m_rrtTree.SetkdTree();
+        std::vector<Node*> pvNode = m_rrtTree.SearchNode(randomSample, 1);
+
+	float T = 1.0;
+        float dT = 0.01;
+
+	int nMinNodeIndex = -1;
+	float fCost = 1000000000.0;
+	int nDir = 0;
+        vector<Edge*> vMinEdges;
+
+	// 5. Candidate Generation from Nearest Node and Search for Minimal Cost Node
+	for( int i=0; i<pvNode.size(); i++)
+	{
+            pcl::PointXYZI nodePt = pvNode[i]->getNodePoint();
+
+	    float v_max = 5.0*0.278;
+   	    float v_interval = 1.0*0.278;
+            
+
+	    for( float v= -v_max; v<=v_max; v+=v_interval )
+	    {
+		float a = 0.0;	
+		float wa_max = 27.0;
+		float wa_interval = 3.0;
+		for( float wa = -wa_max; wa<=wa_max; wa+=wa_interval)
+		{
+		    CTRAModel model( nodePt.x, nodePt.y, nodePt.z, v, a, wa, T, dT);
+   		    if( model.GetValid() == true )
+		    {
+	        	    vector<Edge*> vEdges = model.GetEdge();
+			    // Cost Function 
+			    Edge* pEdge = vEdges.back();
+			   
+			    float angGain = 1.0;
+			    float distGain = 1.0;
+			    float omegaGain = 1.0;
+
+			    float distCost = sqrt((pEdge->x - randomSample.x)*(pEdge->x - randomSample.x) + (pEdge->y - randomSample.y)*(pEdge->y - randomSample.y));
+			    float angCost = fabs(AngleUtils::toRange(pEdge->h - randomSample.z));
+			    float omegaCost = omegaGain*fabs(AngleUtils::toRange(pvNode[i]->GetBackEdge()->wa - pEdge->wa));
+
+			    float fEdgeCost = omegaCost + exp( angCost ) * angGain * angGain / exp( distCost * distGain ) + distGain * distCost * distCost;
+
+			    if( fEdgeCost < fCost )
+			    {
+				vMinEdges = vEdges;
+				nMinNodeIndex = i;
+				fCost = fEdgeCost;
+				nDir = SIGN(v);
+			    }
+
+		    }
+
+		}
+		 
+	    }
+	    
+	}
+
+	if( nMinNodeIndex != -1 )
+	{
+		// 6. Append Minimal Cost Node to RRT Tree
+		Edge* pEdge = vMinEdges.back();
+	    	Node* pNode = new Node(pEdge->x, pEdge->y, pEdge->h, m_rrtTree.GetNewId(), pvNode[nMinNodeIndex]->GetId(), nDir, fCost, vMinEdges);
+		m_rrtTree.AddNode(pNode);
+		
+		// 7. Does this node reach to the goal?
+		float fGoalDistRes = 0.1;
+		float fGoalAngRes = RADIANS(5.0);
+
+		state = m_rrtTree.IsGoal(m_goal[0], m_goal[1], m_goal[2], fGoalDistRes, fGoalAngRes);
+
+		cout << "CALL :"<<m_rrtTree.GetNewId() <<" " << pvNode[nMinNodeIndex]->GetId() <<" " << pEdge->x<<" " << pEdge->y<<" " << pEdge->h <<" " << m_goal[0] <<" " << m_goal[1]  <<" "<< m_goal[2] <<endl;
+	}
+	if( iter > maxIter )
+		break;
+    }
+}
+void ParkingPlannerThread::run()
+{
+    int cntLoop =0;
+    int index =0;
+    ros::Rate loop_rate(10);
+    while(1)
+    {
+        {
+            QMutexLocker locker(&m_mutex);
+            if(m_bThreadStop) break;
+
+            if(m_bSubTopicUpdated )
+            {
+                if( m_bParkingPathUpdate )
+		{
+			Compute();
+		}
+                m_bSubTopicUpdated = false;
+
+            }
+
+        }
+        ros::spinOnce();
+        loop_rate.sleep();
+        
+    }
+}

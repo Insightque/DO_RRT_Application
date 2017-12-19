@@ -1,0 +1,305 @@
+Dev1:    Beginning benchmark
+Dev1:    No planner specified. Using default.
+Dev1:    LBKPIECE1: Attempting to use default projection.
+Dev2:    LBKPIECE1: Planner range detected to be 14.736364
+Dev1:    Preparing for run 0 of geometric_DORRT
+Dev1:    DORRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner DORRT
+Dev1:    DORRT: Created 3463 states
+Dev1:    SimpleSetup: Path simplification took 0.004175 seconds and changed from 9 to 4 states
+Dev1:    Preparing for run 1 of geometric_DORRT
+Dev1:    DORRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner DORRT
+Dev1:    DORRT: Created 3546 states
+Dev1:    SimpleSetup: Path simplification took 0.004690 seconds and changed from 9 to 4 states
+Dev1:    Preparing for run 2 of geometric_DORRT
+Dev1:    DORRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner DORRT
+Dev1:    DORRT: Created 3438 states
+Dev1:    SimpleSetup: Path simplification took 0.004093 seconds and changed from 10 to 3 states
+Dev1:    Preparing for run 3 of geometric_DORRT
+Dev1:    DORRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner DORRT
+Dev1:    DORRT: Created 3545 states
+Dev1:    SimpleSetup: Path simplification took 0.003574 seconds and changed from 7 to 3 states
+Dev1:    Preparing for run 4 of geometric_DORRT
+Dev1:    DORRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner DORRT
+Dev1:    DORRT: Created 3564 states
+Dev1:    SimpleSetup: Path simplification took 0.003213 seconds and changed from 10 to 6 states
+Dev1:    Preparing for run 5 of geometric_DORRT
+Dev1:    DORRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner DORRT
+Dev1:    DORRT: Created 3371 states
+Dev1:    SimpleSetup: Path simplification took 0.002289 seconds and changed from 7 to 3 states
+Dev1:    Preparing for run 6 of geometric_DORRT
+Dev1:    DORRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner DORRT
+Dev1:    DORRT: Created 3552 states
+Dev1:    SimpleSetup: Path simplification took 0.001972 seconds and changed from 5 to 3 states
+Dev1:    Preparing for run 7 of geometric_DORRT
+Dev1:    DORRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner DORRT
+Dev1:    DORRT: Created 3632 states
+Dev1:    SimpleSetup: Path simplification took 0.003225 seconds and changed from 10 to 6 states
+Dev1:    Preparing for run 8 of geometric_DORRT
+Dev1:    DORRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner DORRT
+Dev1:    DORRT: Created 3715 states
+Dev1:    SimpleSetup: Path simplification took 0.002704 seconds and changed from 12 to 5 states
+Dev1:    Preparing for run 9 of geometric_DORRT
+Dev1:    DORRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner DORRT
+Dev1:    DORRT: Created 3653 states
+Dev1:    SimpleSetup: Path simplification took 0.004831 seconds and changed from 9 to 4 states
+Dev1:    Preparing for run 10 of geometric_DORRT
+Dev1:    DORRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner DORRT
+Dev1:    DORRT: Created 3679 states
+Dev1:    SimpleSetup: Path simplification took 0.001383 seconds and changed from 10 to 8 states
+Dev1:    Preparing for run 11 of geometric_DORRT
+Dev1:    DORRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner DORRT
+Dev1:    DORRT: Created 3589 states
+Dev1:    SimpleSetup: Path simplification took 0.003732 seconds and changed from 9 to 6 states
+Dev1:    Preparing for run 12 of geometric_DORRT
+Dev1:    DORRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner DORRT
+Dev1:    DORRT: Created 3568 states
+Dev1:    SimpleSetup: Path simplification took 0.006328 seconds and changed from 12 to 5 states
+Dev1:    Preparing for run 13 of geometric_DORRT
+Dev1:    DORRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner DORRT
+Dev1:    DORRT: Created 3464 states
+Dev1:    SimpleSetup: Path simplification took 0.001790 seconds and changed from 5 to 3 states
+Dev1:    Preparing for run 14 of geometric_DORRT
+Dev1:    DORRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner DORRT
+Dev1:    DORRT: Created 3486 states
+Dev1:    SimpleSetup: Path simplification took 0.003538 seconds and changed from 12 to 4 states
+Dev1:    Preparing for run 15 of geometric_DORRT
+Dev1:    DORRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner DORRT
+Dev1:    DORRT: Created 3590 states
+Dev1:    SimpleSetup: Path simplification took 0.003301 seconds and changed from 11 to 3 states
+Dev1:    Preparing for run 16 of geometric_DORRT
+Dev1:    DORRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner DORRT
+Dev1:    DORRT: Created 3680 states
+Dev1:    SimpleSetup: Path simplification took 0.005420 seconds and changed from 12 to 5 states
+Dev1:    Preparing for run 17 of geometric_DORRT
+Dev1:    DORRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner DORRT
+Dev1:    DORRT: Created 3474 states
+Dev1:    SimpleSetup: Path simplification took 0.005038 seconds and changed from 15 to 4 states
+Dev1:    Preparing for run 18 of geometric_DORRT
+Dev1:    DORRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner DORRT
+Dev1:    DORRT: Created 3460 states
+Dev1:    SimpleSetup: Path simplification took 0.001955 seconds and changed from 5 to 3 states
+Dev1:    Preparing for run 19 of geometric_DORRT
+Dev1:    DORRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner DORRT
+Dev1:    DORRT: Created 3660 states
+Dev1:    SimpleSetup: Path simplification took 0.004322 seconds and changed from 10 to 3 states
+Dev1:    Preparing for run 20 of geometric_DORRT
+Dev1:    DORRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner DORRT
+Dev1:    DORRT: Created 3718 states
+Dev1:    SimpleSetup: Path simplification took 0.003666 seconds and changed from 11 to 5 states
+Dev1:    Preparing for run 21 of geometric_DORRT
+Dev1:    DORRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner DORRT
+Dev1:    DORRT: Created 3549 states
+Dev1:    SimpleSetup: Path simplification took 0.001982 seconds and changed from 8 to 3 states
+Dev1:    Preparing for run 22 of geometric_DORRT
+Dev1:    DORRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner DORRT
+Dev1:    DORRT: Created 3522 states
+Dev1:    SimpleSetup: Path simplification took 0.002086 seconds and changed from 6 to 3 states
+Dev1:    Preparing for run 23 of geometric_DORRT
+Dev1:    DORRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner DORRT
+Dev1:    DORRT: Created 3644 states
+Dev1:    SimpleSetup: Path simplification took 0.002842 seconds and changed from 11 to 4 states
+Dev1:    Preparing for run 24 of geometric_DORRT
+Dev1:    DORRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner DORRT
+Dev1:    DORRT: Created 3604 states
+Dev1:    SimpleSetup: Path simplification took 0.004216 seconds and changed from 11 to 3 states
+Dev1:    Preparing for run 25 of geometric_DORRT
+Dev1:    DORRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner DORRT
+Dev1:    DORRT: Created 3569 states
+Dev1:    SimpleSetup: Path simplification took 0.002029 seconds and changed from 6 to 3 states
+Dev1:    Preparing for run 26 of geometric_DORRT
+Dev1:    DORRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner DORRT
+Dev1:    DORRT: Created 3611 states
+Dev1:    SimpleSetup: Path simplification took 0.003004 seconds and changed from 11 to 6 states
+Dev1:    Preparing for run 27 of geometric_DORRT
+Dev1:    DORRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner DORRT
+Dev1:    DORRT: Created 3598 states
+Dev1:    SimpleSetup: Path simplification took 0.003195 seconds and changed from 11 to 4 states
+Dev1:    Preparing for run 28 of geometric_DORRT
+Dev1:    DORRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner DORRT
+Dev1:    DORRT: Created 3454 states
+Dev1:    SimpleSetup: Path simplification took 0.002188 seconds and changed from 9 to 5 states
+Dev1:    Preparing for run 29 of geometric_DORRT
+Dev1:    DORRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner DORRT
+Dev1:    DORRT: Created 3565 states
+Dev1:    SimpleSetup: Path simplification took 0.003600 seconds and changed from 7 to 4 states
+Dev1:    Preparing for run 0 of geometric_RRT
+Dev1:    RRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner RRT
+Dev1:    RRT: Created 6888 states
+Dev1:    SimpleSetup: Path simplification took 0.001752 seconds and changed from 9 to 7 states
+Dev1:    Preparing for run 1 of geometric_RRT
+Dev1:    RRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner RRT
+Dev1:    RRT: Created 6858 states
+Dev1:    SimpleSetup: Path simplification took 0.006069 seconds and changed from 12 to 4 states
+Dev1:    Preparing for run 2 of geometric_RRT
+Dev1:    RRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner RRT
+Dev1:    RRT: Created 6914 states
+Dev1:    SimpleSetup: Path simplification took 0.004824 seconds and changed from 15 to 4 states
+Dev1:    Preparing for run 3 of geometric_RRT
+Dev1:    RRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner RRT
+Dev1:    RRT: Created 6861 states
+Dev1:    SimpleSetup: Path simplification took 0.014750 seconds and changed from 14 to 6 states
+Dev1:    Preparing for run 4 of geometric_RRT
+Dev1:    RRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner RRT
+Dev1:    RRT: Created 6878 states
+Dev1:    SimpleSetup: Path simplification took 0.002521 seconds and changed from 14 to 7 states
+Dev1:    Preparing for run 5 of geometric_RRT
+Dev1:    RRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner RRT
+Dev1:    RRT: Created 6888 states
+Dev1:    SimpleSetup: Path simplification took 0.002839 seconds and changed from 8 to 3 states
+Dev1:    Preparing for run 6 of geometric_RRT
+Dev1:    RRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner RRT
+Dev1:    RRT: Created 6850 states
+Dev1:    SimpleSetup: Path simplification took 0.001819 seconds and changed from 7 to 5 states
+Dev1:    Preparing for run 7 of geometric_RRT
+Dev1:    RRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner RRT
+Dev1:    RRT: Created 6952 states
+Dev1:    SimpleSetup: Path simplification took 0.003056 seconds and changed from 8 to 5 states
+Dev1:    Preparing for run 8 of geometric_RRT
+Dev1:    RRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner RRT
+Dev1:    RRT: Created 6840 states
+Dev1:    SimpleSetup: Path simplification took 0.001985 seconds and changed from 10 to 6 states
+Dev1:    Preparing for run 9 of geometric_RRT
+Dev1:    RRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner RRT
+Dev1:    RRT: Created 6950 states
+Dev1:    SimpleSetup: Path simplification took 0.008454 seconds and changed from 15 to 4 states
+Dev1:    Preparing for run 10 of geometric_RRT
+Dev1:    RRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner RRT
+Dev1:    RRT: Created 6825 states
+Dev1:    SimpleSetup: Path simplification took 0.000962 seconds and changed from 5 to 4 states
+Dev1:    Preparing for run 11 of geometric_RRT
+Dev1:    RRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner RRT
+Dev1:    RRT: Created 6940 states
+Dev1:    SimpleSetup: Path simplification took 0.005430 seconds and changed from 17 to 10 states
+Dev1:    Preparing for run 12 of geometric_RRT
+Dev1:    RRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner RRT
+Dev1:    RRT: Created 6852 states
+Dev1:    SimpleSetup: Path simplification took 0.003310 seconds and changed from 9 to 4 states
+Dev1:    Preparing for run 13 of geometric_RRT
+Dev1:    RRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner RRT
+Dev1:    RRT: Created 6894 states
+Dev1:    SimpleSetup: Path simplification took 0.002938 seconds and changed from 10 to 5 states
+Dev1:    Preparing for run 14 of geometric_RRT
+Dev1:    RRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner RRT
+Dev1:    RRT: Created 6888 states
+Dev1:    SimpleSetup: Path simplification took 0.001985 seconds and changed from 7 to 3 states
+Dev1:    Preparing for run 15 of geometric_RRT
+Dev1:    RRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner RRT
+Dev1:    RRT: Created 6891 states
+Dev1:    SimpleSetup: Path simplification took 0.001999 seconds and changed from 8 to 5 states
+Dev1:    Preparing for run 16 of geometric_RRT
+Dev1:    RRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner RRT
+Dev1:    RRT: Created 6903 states
+Dev1:    SimpleSetup: Path simplification took 0.005278 seconds and changed from 18 to 7 states
+Dev1:    Preparing for run 17 of geometric_RRT
+Dev1:    RRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner RRT
+Dev1:    RRT: Created 6898 states
+Dev1:    SimpleSetup: Path simplification took 0.002734 seconds and changed from 9 to 5 states
+Dev1:    Preparing for run 18 of geometric_RRT
+Dev1:    RRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner RRT
+Dev1:    RRT: Created 6857 states
+Dev1:    SimpleSetup: Path simplification took 0.003608 seconds and changed from 10 to 6 states
+Dev1:    Preparing for run 19 of geometric_RRT
+Dev1:    RRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner RRT
+Dev1:    RRT: Created 6982 states
+Dev1:    SimpleSetup: Path simplification took 0.002079 seconds and changed from 10 to 3 states
+Dev1:    Preparing for run 20 of geometric_RRT
+Dev1:    RRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner RRT
+Dev1:    RRT: Created 6880 states
+Dev1:    SimpleSetup: Path simplification took 0.002194 seconds and changed from 6 to 4 states
+Dev1:    Preparing for run 21 of geometric_RRT
+Dev1:    RRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner RRT
+Dev1:    RRT: Created 6773 states
+Dev1:    SimpleSetup: Path simplification took 0.004336 seconds and changed from 12 to 4 states
+Dev1:    Preparing for run 22 of geometric_RRT
+Dev1:    RRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner RRT
+Dev1:    RRT: Created 6938 states
+Dev1:    SimpleSetup: Path simplification took 0.002448 seconds and changed from 8 to 4 states
+Dev1:    Preparing for run 23 of geometric_RRT
+Dev1:    RRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner RRT
+Dev1:    RRT: Created 6966 states
+Dev1:    SimpleSetup: Path simplification took 0.002980 seconds and changed from 12 to 7 states
+Dev1:    Preparing for run 24 of geometric_RRT
+Dev1:    RRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner RRT
+Dev1:    RRT: Created 6923 states
+Dev1:    SimpleSetup: Path simplification took 0.002114 seconds and changed from 6 to 5 states
+Dev1:    Preparing for run 25 of geometric_RRT
+Dev1:    RRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner RRT
+Dev1:    RRT: Created 6907 states
+Dev1:    SimpleSetup: Path simplification took 0.002551 seconds and changed from 10 to 5 states
+Dev1:    Preparing for run 26 of geometric_RRT
+Dev1:    RRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner RRT
+Dev1:    RRT: Created 6970 states
+Dev1:    SimpleSetup: Path simplification took 0.002740 seconds and changed from 7 to 6 states
+Dev1:    Preparing for run 27 of geometric_RRT
+Dev1:    RRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner RRT
+Dev1:    RRT: Created 6853 states
+Dev1:    SimpleSetup: Path simplification took 0.004139 seconds and changed from 6 to 4 states
+Dev1:    Preparing for run 28 of geometric_RRT
+Dev1:    RRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner RRT
+Dev1:    RRT: Created 6961 states
+Dev1:    SimpleSetup: Path simplification took 0.004725 seconds and changed from 13 to 7 states
+Dev1:    Preparing for run 29 of geometric_RRT
+Dev1:    RRT: Starting planning with 1 states already in datastructure
+Dev1:    ProblemDefinition: Adding approximate solution from planner RRT
+Dev1:    RRT: Created 6991 states
+Dev1:    SimpleSetup: Path simplification took 0.003799 seconds and changed from 12 to 6 states
+Dev1:    Benchmark complete

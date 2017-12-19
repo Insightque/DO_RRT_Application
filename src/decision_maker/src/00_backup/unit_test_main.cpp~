@@ -1,0 +1,132 @@
+#include <iostream>
+#include "../inc/ParkingPlannerThread.h"
+#include <Eigen/Core>
+
+using namespace Eigen;
+using namespace std;
+
+
+int main(int argc, char** argv)
+{
+	float ln = 100.0; 	// Length of conductors
+	float d = 2.58;		// Distance between the conductors m & n
+	int m = 1; 		// Direction of current through the conductor, m(Right) 1(INTO), -1(OUT)
+	int n = -1; 		// Direction of current through the conductor, n(Left) 1(INTO), -1(OUT)
+	int N = 20; 		// Number sections/elements in the conductors
+	int dl = ln/N; 		// Length of each element
+	
+	// XYZ coordinates/Location of each element from the origin (0,0,0), i.e 'd/2' is taken as origin..
+	MatrixXd xCm = (d/2.0)*MatrixXd::Ones(1,N); 
+	MatrixXd xCn = (-d/2.0)*MatrixXd::Ones(1,N);
+	
+	// Y Coordinate of each element from origin, half on +Y & other half on -Y and also sam for both conductors
+	VectorXd yC = VectorXd::LinSpaced(N, -ln/2.0+dl/2.0, ln/2.0-dl/2.0);
+
+	// zC remains 0 throughout the length, as conductors are lying on XY plane
+	MatrixXd zC = MatrixXd::Zero(1,N);
+	
+	// Length(Projection) 7 Direction of each current element in Vector form
+	MatrixXd Lx = MatrixXd::Zero(1,N);	// Length of each element is zero on X axis
+	MatrixXd Ly = dl*MatrixXd::Ones(1,N);	// Length of each element is dl on Y axis
+	MatrixXd Lz = MatrixXd::Zero(1,N);	// Length of each element is zero on Z axis
+		
+	// Points/Locations in space (here XZ plane) where B is to be computed
+	int NP = 64;	//Detector points..
+	int xPmax = 15;	//Dimensions of detector space.., arbitrary..
+	int zPmax = 15;
+
+	//Divide space with NP points..
+	RowVectorXd xP = RowVectorXd::LinSpaced(NP, -xPmax, xPmax);	
+	VectorXd zP = VectorXd::LinSpaced(NP, -zPmax, zPmax);
+
+	// Creating the Mesh..
+	MatrixXd xxP = xP.replicate(NP,1); 
+	MatrixXd zzP = zP.replicate(1,NP);
+
+	//Initialize B..
+	MatrixXd Bx = MatrixXd::Zero(NP,NP);
+	MatrixXd By = MatrixXd::Zero(NP,NP);
+	MatrixXd Bz = MatrixXd::Zero(NP,NP);
+
+	// Computation of Magnetic Field (B) using Superposition principle..
+	// Compute B at each detector points due to each small cond elements & integrate them..
+	for( int q=0; q<N; q++ )
+	{
+		MatrixXd rxm = xxP.array() - xCm(0,q); // Displacement Vector along X direction, from cond m..
+		MatrixXd rxn = xxP.array() - xCn(0,q); // Displacement Vector along X direction, from cond n..
+		
+		double ry = yC(q,0);	// Same for m & n, no detector points on Y direction..
+		
+		MatrixXd rz = zzP.array() - zC(0,q); // Same for m & n..
+		
+		MatrixXd rm = (rxm.array()*rxm.array()+ry*ry+rz.array()*rz.array()).sqrt();	// Displacement Magnitude for an element on cond m..
+		MatrixXd rn = (rxn.array()*rxn.array()+ry*ry+rz.array()*rz.array()).sqrt();	// Displacement Magnitude for an element on cond n..
+		
+		MatrixXd r3m = rm.array()*rm.array()*rm.array();
+		MatrixXd r3n = rn.array()*rn.array()*rn.array();
+		
+		/*
+		         dl X r
+		  B = K  ------
+		          r^3
+		                 |  i    j    k   |         |  i    j    k  |
+		  dl X r  =      | Lx    Ly   Lz  |     =   |  0   Ly    0  |  =   i(Ly.rz-0) - j(0-0) + k(0 - Ly.rx)
+		                 | rx    ry   rz  |         | rx   ry    rz |
+
+		  Hence, Bx = Ly.rz/r^3, By = 0, Bz = -Ly.rx/r^3
+
+		*/
+
+		Bx = Bx.array() + m*Ly(0,q)*rz.array()/r3m.array() + n*Ly(0,q)*rz.array()/r3n.array();	// m & n, direction of current element..
+		// By = 0;
+		Bz = Bz.array() - m*Ly(0,q)*rxm.array()/r3m.array() - n*Ly(0,q)*rxn.array()/r3n.array();
+	}
+	
+	/*
+	for( i=1:63*63)
+    		drawarrow([xxP(i),zzP(i)],[xxP(i)+Bx(i),zzP(i)+Bz(i)],1.0,0.1,'b');
+	*/
+	MatrixXd Rot(2,2);
+	d << cos(_theta), -sin(_theta),
+	       sin(_theta),  cos(_theta);
+
+	MatrixXd resVec = MatrixXd::Zero(NP,NP);
+	MatrixXd resPos = MatrixXd::Zero(NP,NP);
+	for(int i=0; i<NP; i++)
+	{
+		// Concat
+		// MatrixXd C(A.rows(), A.cols()+B.cols());
+		MatrixXd resVec(2, NP);
+		resVec(i*2 << Bx.row(i)+xxP.row(i),
+		          Bz.row(i)+zzP.row(i);
+		MatrixXd resVec(2, NP);
+	}
+
+	return 0;
+}
+
+// Matlab --> C++ (MeshGrid)
+//X = RowVectorXd::LinSpaced(1,3,3).replicate(5,1);
+//Y = VectorXd::LinSpaced(10,14,5).replicate(1,3);
+/*
+repmat
+
+e.g., dst = src.replicate(n,m);
+
+see http://eigen.tuxfamily.org/dox-devel/cl ... 4e4b103032
+
+meshgrid
+
+you can mix LinSpaced and replicate:
+
+X = RowVectorXd::LinSpaced(1,3,3).replicate(5,1);
+Y = VectorXd::LinSpaced(10,14,5).replicate(1,3);
+
+see: http://eigen.tuxfamily.org/dox-devel/cl ... a9c6ae34d8
+
+reshape
+
+Currently you can mimic it using Map:
+
+B = Map<MatrixXd>(A.data(),m,n); 
+*/

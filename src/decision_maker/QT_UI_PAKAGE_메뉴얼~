@@ -1,0 +1,39 @@
+1. catkin_ws 에 qt_ui 폴더 복사
+2. CMakeLists.txt 수정
+	PKG_NAME --> 원하는 패키지 이름으로 변경
+3. src, inc, ui 폴더에 PKG_NAME_main.h,PKG_NAME_main.cpp,PKG_NAME_gui.ui 
+   파일을 패키지 이름으로 변경
+4. main.cpp --> #include "../inc/PKG_NAME_main.h" 변경
+5. main.h --> #include "../../../build/PKG_NAME/ui_PKG_NAME_gui.h" 변경 (ui_*.h --> ui_붙여야함)
+
+6. NameThread.cpp, NameThread.h --> Name을 원하는 이름으로 변경
+7. CMakeLists.txt에 파일명 수정
+
+8. package.xml --> name/description 수정
+
+####################################################################
+9. usr msg/srv 생성시 msg/srv 폴더에 파일 추가하고, CMakeLists에 
+#add_message_files(
+#   DIRECTORY msg
+#   FILES
+#   UserMessage.msg
+#)
+
+# add_service_files(
+#   DIRECTORY srv
+#   FILES
+#   Service1.srv
+#   Service2.srv
+# )
+이부분 주석 풀고 , 해당 파일이름기입
+# generate_messages(
+#   DEPENDENCIES
+#   std_msgs
+# ) 
+이부분도 주석 풀기
+<PKG_NAME/UserMessage.h> 로 include 한다.
+####################################################################
+EIGEN
+
+
+
