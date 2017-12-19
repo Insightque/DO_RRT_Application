@@ -1,0 +1,44 @@
+~/ompl-1.2.1-Source/src/ompl/CMakeFiles 폴더 지우기
+make 
+
+
+아래건 안해도됨- 자동생성되는거임.
+################################################################
+vi ~/ompl-1.2.1-Source/src/ompl/Makefile
+
+다음과 같이 새로 추가한 파일 정보 넣기
+#########################################################
+2802 geometric/planners/rrt/src/InformedDORRTstar.o: geometric/planners/rrt/src/InformedDORRTstar.cpp.o
+2803 .PHONY : geometric/planners/rrt/src/InformedDORRTstar.o
+2804
+2805 # target to build an object file
+2806 geometric/planners/rrt/src/InformedDORRTstar.cpp.o:
+2807     cd /home/shinsh/ompl-1.2.1-Source && $(MAKE) -f src/ompl/CMakeFiles/ompl.dir/build.make src/ompl/CMakeFiles/ompl.dir/geometric/planners/rrt/src/InformedDORRTstar.cpp.o
+2808 .PHONY : geometric/planners/rrt/src/InformedDORRTstar.cpp.o
+2809
+2810 geometric/planners/rrt/src/InformedDORRTstar.i: geometric/planners/rrt/src/InformedDORRTstar.cpp.i
+2811 .PHONY : geometric/planners/rrt/src/InformedDORRTstar.i
+2812
+2813 # target to preprocess a source file
+2814 geometric/planners/rrt/src/InformedDORRTstar.cpp.i:
+2815     cd /home/shinsh/ompl-1.2.1-Source && $(MAKE) -f src/ompl/CMakeFiles/ompl.dir/build.make src/ompl/CMakeFiles/ompl.dir/geometric/planners/rrt/src/InformedDORRTstar.cpp.i
+2816 .PHONY : geometric/planners/rrt/src/InformedDORRTstar.cpp.i
+2817
+2818 geometric/planners/rrt/src/InformedDORRTstar.s: geometric/planners/rrt/src/InformedDORRTstar.cpp.s
+2819 .PHONY : geometric/planners/rrt/src/InformedDORRTstar.s
+2820
+2821 # target to generate assembly for a file
+2822 geometric/planners/rrt/src/InformedDORRTstar.cpp.s:
+2823     cd /home/shinsh/ompl-1.2.1-Source && $(MAKE) -f src/ompl/CMakeFiles/ompl.dir/build.make src/ompl/CMakeFiles/ompl.dir/geometric/planners/rrt/src/InformedDORRTstar.cpp.s
+2824 .PHONY : geometric/planners/rrt/src/InformedDORRTstar.cpp.s
+#########################################################
+
+4105     @echo "... geometric/planners/rrt/src/InformedDORRTstar.o"
+4106     @echo "... geometric/planners/rrt/src/InformedDORRTstar.i"
+4107     @echo "... geometric/planners/rrt/src/InformedDORRTstar.s"
+#########################################################
+
+ompl-1.2.1-Source/src/ompl/ 폴더로 가서
+make clean
+
+make
